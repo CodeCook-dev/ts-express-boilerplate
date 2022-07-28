@@ -1,45 +1,45 @@
-import express, { Application } from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import compression from "compression";
+import express, { Application } from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import compression from 'compression'
 
-import { route } from "./route";
+import { route } from './route'
 
-dotenv.config();
+dotenv.config()
 
 export class Server {
-  private app: express.Application;
-  private port?: number;
+  private app: express.Application
+  private port?: number
 
   constructor(port?: number) {
-    this.app = express();
-    this.port = port || 3000;
+    this.app = express()
+    this.port = port || 3000
   }
 
   public start(): void {
-    this.config();
-    this.app.listen(this.app.get("port"), () => {
-      console.log(`[Server]: server running on port ${this.port}.`);
-    });
+    this.config()
+    this.app.listen(this.app.get('port'), () => {
+      console.log(`[Server]: server running on port ${this.port}.`)
+    })
   }
 
   private config(): void {
-    dotenv.config();
-    this.app.set("port", process.env.PORT || this.port);
+    dotenv.config()
+    this.app.set('port', process.env.PORT || this.port)
 
     // Configuring static directories
-    this.app.use(express.static("public"));
-    this.app.use(express.static("views"));
+    this.app.use(express.static('public'))
+    this.app.use(express.static('views'))
 
     // Setting template
-    this.app.set("view engine", "ejs");
+    this.app.set('view engine', 'ejs')
 
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(compression());
-    this.app.use(cors());
+    this.app.use(express.json())
+    this.app.use(express.urlencoded({ extended: false }))
+    this.app.use(compression())
+    this.app.use(cors())
 
     // Configuring router
-    this.app.use("/", route);
+    this.app.use('/', route)
   }
 }
