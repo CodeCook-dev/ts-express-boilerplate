@@ -19,7 +19,9 @@ export class Server {
   public start(): void {
     this.config()
     this.app.listen(this.app.get('port'), () => {
-      console.log(`[Server]: server running on port ${this.port}.`)
+      console.log(
+        `[Server]: server running on port \x1b[32m${this.port}\x1b[0m.`
+      )
     })
   }
 
